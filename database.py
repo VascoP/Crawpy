@@ -13,19 +13,6 @@ from bs4 import SoupStrainer
 import requests as Reqs
 
 
-# Website
-   # n / hash       int/hash
-   # domain         text
-   # page           One to Many
-
-# Page
-   # website        Many to One
-   # sublink        text
-   # full url       text
-   # content        text
-
-# Subdomain
-
 
 Base = declarative_base()
 
