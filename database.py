@@ -32,7 +32,7 @@ class Webpage(Base):
    
    
    def __init__(self, link):
-      response = self.get_page_content(link)
+      response = self.get_content(link)
       self.html = response.text
       self.full_url = response.url
 
@@ -45,18 +45,18 @@ class Webpage(Base):
    def get_base_url(self):
       return urljoin(urlparse(self.full_url).scheme, urlparse(self.full_url).netloc)
 
-   def extract_page_links(self):
+   def extract_links(self):
       only_a_tags = SoupStrainer("a", href=True)
-      a_tag_list = [a_tag.get("href") for a_tag in Soup(html, parse_only=only_a_tags).find_all("a", href=True)]
-      return a_tag_list
+      url_list = [url.get("href") if urlparse(url.get("href")).scheme else urljoin(self.full_url, url.get("href")) for url in Soup(self.html, parse_only=only_a_tags).find_all("a", href=True)]
+      return url_list
 
-   def get_page_content(self, link):
+   def get_content(self, link):
       return Reqs.get(link)
 
-   def save_page(self, db):
-      search = db.session.query(Webpage).filter(Webpage.full_url == self.full_url).first()
-      if search is not None:
-         search.num_crawls += 1
+   def save_crawl(self, db):
+      result = db.session.query(Webpage).filter(Webpage.full_url == self.full_url).first()
+      if result is not None:
+         result.num_crawls += 1
       else:
          db.session.add(self)
       return db
