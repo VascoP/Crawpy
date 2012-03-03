@@ -21,7 +21,7 @@ class Webpage(Base):
    # Administrivia
    __tablename__ = 'webpage'
    pk = Column(Integer, primary_key = True)
-   first_craw_date = Column(DateTime, default=func.now())
+   first_crawl_date = Column(DateTime, default=func.now())
    last_crawl_date = Column(DateTime, default=func.now(), onupdate=func.now())
 
    # Juice
@@ -49,7 +49,7 @@ class Webpage(Base):
       url_list = []
       only_a_tags = SoupStrainer("a", href=True)
       
-      crawlable = ("http", "https", "")
+      crawlable = ("http", "https", "")     # Empty scheme meaning relative path
       
       for url in Soup(self.html, parse_only=only_a_tags).find_all("a", href=True):
          url = url.get("href")
