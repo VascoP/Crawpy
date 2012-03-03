@@ -13,13 +13,8 @@ from bs4 import SoupStrainer
 
 import requests as Reqs
 
-from datetime import date
-import logging
-
 
 Base = declarative_base()
-
-logging.basicConfig(level=logging.INFO, filename='logs/connection_errors_{}.log'.format(date.today()))
 
 
 class Webpage(Base):
@@ -69,13 +64,7 @@ class Webpage(Base):
       return url_list
 
    def get_content(self, link):
-      response = None
-      while not response:
-         try:
-            response = Reqs.get(link)
-         except Reqs.ConnectionError, e:
-            logging.exception(e)
-      return response
+      return Reqs.get(link)
 
    def save_crawl(self, db):
       result = db.session.query(Webpage).filter(Webpage.full_url == self.full_url).first()
