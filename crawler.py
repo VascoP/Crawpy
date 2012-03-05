@@ -1,31 +1,15 @@
 #!/usr/bin/python
 from database import *
-import logging
-from datetime import date
 from sys import exit
 
+from settings import *
 
-# Number of pages we crawl before commiting to the database
-# More is faster but riskier (lose every uncommited crawl on error)
-COMMIT_BATCH = 1
 
-# Infinite crawling?
-BOUNDED = True
+#def get_path(self):
+   #return urlparse(self.full_url).path
 
-# If each frontier is a level in the webpage graph
-# this is how many layers down we will craw on an execution
-MAX_DEPTH_GRAPH = 2
-
-# Selected seeds by hand
-SEED_LINKS = ["http://www.xxxisup.me/google.com"]#"http://veja.abril.com.br/", "http://www.stackoverflow.com", "http://dir.yahoo.com/", "http://www.dmoz.org/", "http://www.reddit.com", "http://news.ycombinator.com"]
-
-# Number of webpages to select from the database and harvest on each iteration
-# higher number means less queries
-HARVEST_BATCH = 1
-
-# Logging level + files
-logging.basicConfig(level=logging.DEBUG, filename='logs/connection_errors_{}.log'.format(date.today()))
-
+#def get_base_url(self):
+   #return urljoin(urlparse(self.full_url).scheme, urlparse(self.full_url).netloc)
 
 def main():
    frontier = []
@@ -55,18 +39,10 @@ def main():
       # Crawl frontier
       for (counter, link) in enumerate(frontier):
          print "[{}/{}] Crawling {}".format(counter+1, len(frontier), link)
-
-         page = None
-         attempts = 0   # try 10 times to crawl a page before moving on
-         while not page and attempts < 10:
-            attempts += 1
-            try:
-               page = Webpage(link)
-            except Reqs.ConnectionError, e:
-               logging.exception(e)
+         page = Webpage(link)
 
          if page:
-            page.save_crawl(db)
+            page.save(db)
 
          if counter % COMMIT_BATCH == 0:
             db.session.commit()

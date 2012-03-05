@@ -2,7 +2,5 @@
 A (crappy) attempt at a python web crawler
 
 ## TODO
-* Separate link harvesting from crawling - database and process
-* Change from Requests to urllib2 (more control)
-* Experiment with a noSQL database to check performance
+* Experiment with a noSQL database
 * Respect robots.txt
