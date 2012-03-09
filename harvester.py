@@ -20,8 +20,8 @@ def harvester(db):
       page.num_harvests += 1
       
       if counter % COMMIT_BATCH == 0:
-         #db.session.commit()
-         pass
+         db.session.commit()
+         #pass
       counter += 1
 
 

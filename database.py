@@ -127,6 +127,19 @@ class Database(object):
       Session = sessionmaker(bind=self.engine)
       self.session = Session()
 
+   def seed_links(self, seeds=[]):
+      if seeds == []:
+         origin = SEED_LINKS
+      else:
+         origin = seeds
+      for seed in origin:
+         link = Link(seed)
+         link.save(self)
+      self.session.commit()
+
+   def is_link_table_empty(self):
+      return True if self.session.query(Link).first() is None else False
+      
    def get_uncrawled_link(self):
       return self.session.query(Link).filter(Link.num_crawls == 0).first()
 
