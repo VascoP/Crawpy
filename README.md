@@ -20,6 +20,8 @@ You can run as many explorers and harvesters concurrently as you like.
 Each explorer gets uncrawled links from the `link` table, retrieves their html contents and dumps them into the `webpage` table.
 The harvester gets an unharvested html content from the `webpage` table, extracts links, and stores them in as uncrawled links in the `link` table.
 
+![workflow](http://i.imgur.com/QV05o.jpg)
+
 ### Todo
 
 * Automate explorer/harvester relation
