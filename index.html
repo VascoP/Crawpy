@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Crawpy : An attempt at a python web crawler" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Crawpy</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/VascoP/crawpy">Fork Me on GitHub</a>
+
+          <h1 id="project_title">Crawpy</h1>
+          <h2 id="project_tagline">An attempt at a python web crawler</h2>
+
+          <section id="downloads">
+            <a class="zip_download_link" href="https://github.com/VascoP/crawpy/zipball/master">Download this project as a .zip file</a>
+            <a class="tar_download_link" href="https://github.com/VascoP/crawpy/tarball/master">Download this project as a tar.gz file</a>
+          </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>crawpy</h1>
+
+<p>An attempt at a python web crawler</p>
+
+<h3>Usage</h3>
+
+<p>Create a mysql table. If you don't know how to do this I recommend using phpmyadmin. Collation should be <code>utf8_general_ci</code>.</p>
+
+<p>Customize <code>settings.py</code> with your database <em>settings</em>.</p>
+
+<p>Now you can add links to the <code>link</code> table directly or you can edit the <code>SEED_LINKS</code> list in <code>settings.py</code> and run <code>python explorer.py --seed</code></p>
+
+<p>If you're in a hurry you can leave <code>SEED_LINKS</code> alone and just seed from the command line with <code>python explorer.py -seed http://myfirstseed.com http://mysecondseed.net ...</code></p>
+
+<p>The seeding procedure is only required if you have no uncrawled links in your database (ie: first time running the crawler).</p>
+
+<p>After getting a few pages, start a <code>harvester.py</code>.
+You can run as many explorers and harvesters concurrently as you like.</p>
+
+<h3>How it works</h3>
+
+<p>Each explorer gets uncrawled links from the <code>link</code> table, retrieves their html contents and dumps them into the <code>webpage</code> table.
+The harvester gets an unharvested html content from the <code>webpage</code> table, extracts links, and stores them in as uncrawled links in the <code>link</code> table.</p>
+
+<p><img src="http://i.imgur.com/QV05o.jpg" alt="workflow"></p>
+
+<h3>Todo</h3>
+
+<ul>
+<li>Automate explorer/harvester relation</li>
+<li>Better error handling</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Crawpy maintained by <a href="https://github.com/VascoP">VascoP</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
